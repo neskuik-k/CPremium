@@ -31,10 +31,10 @@ public class ConnectionListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (isPremium(player)) {
-            player.sendMessage("Welcome back, premium player!");
+            player.sendMessage("Rebienvenue sur le serveur !");
         } else if (!usersConfig.contains(player.getUniqueId().toString())) {
             frozenPlayers.add(player);
-            player.sendMessage("Please register or login.");
+            player.sendMessage("§cMerci de te connecter avec /login ou /register.");
         }
     }
 
@@ -43,7 +43,6 @@ public class ConnectionListener implements Listener {
         Player player = event.getPlayer();
         if (frozenPlayers.contains(player)) {
             event.setCancelled(true);
-            player.sendMessage("You must register or login to move.");
         }
     }
 
