@@ -1,6 +1,7 @@
 package fr.neskuik.cpremium.listeners;
 
-import fr.xephi.authme.api.v3.AuthMeApi;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +11,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +51,26 @@ public class ConnectionListener implements Listener {
         frozenPlayers.remove(player);
     }
 
+
     private boolean isPremium(Player player) {
-        return AuthMeApi.getInstance().isPremium(player.getName());
+        try {
+            String url = "https://api.mojang.com/users/profiles/minecraft/" + player.getName();
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+
+            if (connection.getResponseCode() == 200) {
+                InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+                JsonObject response = JsonParser.parseReader(reader).getAsJsonObject();
+                String uuid = response.get("id").getAsString();
+                return uuid != null && !uuid.isEmpty();
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
