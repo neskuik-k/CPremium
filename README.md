@@ -14,7 +14,7 @@
 
 📥 Installation
 
-    Téléchargez le plugin CPremium depuis [le site de téléchargement spigot ou le dépôt GitHub] 🔗.
+    Téléchargez le plugin CPremium depuis le site de téléchargement spigot (CPremium)[https://www.spigotmc.org/] 🔗.
 
     Placez le fichier .jar dans le répertoire plugins de votre serveur Minecraft 📂.
 
