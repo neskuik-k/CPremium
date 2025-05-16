@@ -30,9 +30,7 @@ public class ConnectionListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (isPremium(player)) {
-            player.sendMessage("Rebienvenue sur le serveur !");
-        } else if (!usersConfig.contains(player.getUniqueId().toString())) {
+        if ((!usersConfig.contains(player.getUniqueId().toString()) || !isPremium(player))) {
             frozenPlayers.add(player);
             player.sendMessage("§cMerci de te connecter avec /login ou /register.");
         }
